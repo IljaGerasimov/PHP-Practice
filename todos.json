@@ -1,12 +1,17 @@
 [
     {
-        "text": "Apple",
+        "text": "Test",
         "date": "",
-        "finished": true
+        "finished": false
     },
     {
-        "text": "hi lol",
+        "text": "Pluh",
         "date": "",
+        "finished": false
+    },
+    {
+        "text": "Hamburger",
+        "date": "2026-11-7",
         "finished": false
     }
 ]

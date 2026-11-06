@@ -3,7 +3,7 @@
 $file = 'todos.json';
 
 if (file_exists($file)) {
-$todos = json_decode(file_get_contents($file), true);
+  $todos = json_decode(file_get_contents($file), true);
 } else {
   $todos = [];
 }
@@ -14,7 +14,7 @@ $soon = date('Y-m-d', strtotime('+2 days'));
 // Infinite loop for terminal menu 
 while (true) {
   echo "\033[H\033[J";
-  echo "\n=== My To-Do List (Today: $today ===\n";
+  echo "\n=== My To-Do List (Today: $today ===)\n";
 
   if (empty($todos)) {
     echo "(Task list empty)\n";
@@ -40,24 +40,48 @@ while (true) {
   echo "\nWhat to do? [1] New [2] Mark finished [3] Delete [4] End\n";
   $choice = readline("Choice: ");
 
-  if ($choice === '1') {
-    $text = readline("Task: ");
-    $date = readline("Expiry-Date (YYYY-MM-DD or Enter for None): ");
-    $todos[] = ['text' => $text, 'date' => $date, 'finished' => false];
-  } elseif ($choice === '2') {
-    $nr = (int)readline("Which Number is finished? ");
-    if (isset($todos[$nr])) {
-      $todos[$nr]['finished'] = true;
-    }
-  } elseif ($choice === '3') {
-    $nr = (int)readline("Which Number to delet? ");
-    if (isset($todos[$nr])) {
-      unset($todos[$nr]);
-      $todos = array_values($todos);
-    }
-  } elseif ($choice === '4') {
-      break; // Ends the while loop and the program
+  switch ($choice) {
+    case '1':
+      $text = readline("Task: ");
+      $date = readline("Expiry-Date (YYYY-MM-DD or Enter for None): ");
+      $todos[] = ['text' => $text, 'date' => $date, 'finished' => false];
+      break;
+    case '2':
+      $nr = (int)readline("Which Number is finished? ");
+      if (isset($todos[$nr])) {
+        $todos[$nr]['finished'] = true;
+      }
+      break;
+    case '3':
+      $nr = (int)readline("Which Number to delete? ");
+      if (isset($todos[$nr])) {
+        unset($todos[$nr]);
+        $todos = array_values($todos);
+      }
+      break;
+    case '4':
+      exit(0);
   }
+
+  // if ($choice === '1') {
+  //   $text = readline("Task: ");
+  //   $date = readline("Expiry-Date (YYYY-MM-DD or Enter for None): ");
+  //   $todos[] = ['text' => $text, 'date' => $date, 'finished' => false];
+  // } elseif ($choice === '2') {
+  //   $nr = (int)readline("Which Number is finished? ");
+  //   if (isset($todos[$nr])) {
+  //     $todos[$nr]['finished'] = true;
+  //   }
+  // } elseif ($choice === '3') {
+  //   $nr = (int)readline("Which Number to delet? ");
+  //   if (isset($todos[$nr])) {
+  //     unset($todos[$nr]);
+  //     $todos = array_values($todos);
+  //   }
+  // } elseif ($choice === '4') {
+  //     break; // Ends the while loop and the program
+  // }
+
   // after every action save array as text in todos.json
   file_put_contents($file, json_encode($todos, JSON_PRETTY_PRINT));
 }
