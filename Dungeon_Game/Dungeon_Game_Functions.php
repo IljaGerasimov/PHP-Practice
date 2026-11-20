@@ -40,7 +40,7 @@ function gameOver(int $roomNumber): int
   }
 }
 
-function drawDungeon(array $roomData): int
+function drawDungeon(array $roomData): void
 {
   $width = $roomData['width'];
   $height = $roomData['height'];
@@ -70,14 +70,32 @@ function drawDungeon(array $roomData): int
     $mapString .= "\n";
   }
 
-    $poemRotating = substr($roomData['poem'], $roomData['poemSettings']['pos']) . substr($roomData['poem'], 0, $roomData['poemSettings']['pos']);         // \r jumps back to line start and overwrites
-    $poemLine1 = substr($poemRotating, 0 ,$roomData['poemSettings']['len']);
-    $poemLine2 = substr($poemRotating, $roomData['poemSettings']['len'] ,$roomData['poemSettings']['len']);
-    $poemLine3 = substr($poemRotating, $roomData['poemSettings']['len'] * 2 ,$roomData['poemSettings']['len']);
+  echo $cursorReset . $title . $mapString;
+  // $poemRotating = substr($roomData['poem'], $roomData['poemSettings']['pos']) . substr($roomData['poem'], 0, $roomData['poemSettings']['pos']);         // \r jumps back to line start and overwrites
+  // $poemLine1 = substr($poemRotating, 0, $roomData['poemSettings']['len']);
+  // //$poemLine2 = substr($poemRotating, $roomData['poemSettings']['len'] ,$roomData['poemSettings']['len']);
+  // //$poemLine3 = substr($poemRotating, $roomData['poemSettings']['len'] * 2 ,$roomData['poemSettings']['len']);
+  //
+  // //echo "\n" . $poemLine1 . PHP_EOL . $poemLine2 . PHP_EOL . $poemLine3;
+  // echo "\n" . $poemLine1;
+  // $newPoemPosition = ($roomData['poemSettings']['pos'] + 1) % $roomData['poemSettings']['len'];
+  // return $newPoemPosition;
+}
 
-    echo $cursorReset . $title . $mapString;
-    echo "\n" . $poemLine1 . PHP_EOL . $poemLine2 . PHP_EOL . $poemLine3;
+function poemDraw(array $roomData, int &$poemTimer): int
+{
+  $poemRotating = substr($roomData['poem'], $roomData['poemSettings']['pos']) . substr($roomData['poem'], 0, $roomData['poemSettings']['pos']);         // \r jumps back to line start and overwrites
+  $poemLine1 = substr($poemRotating, 0, $roomData['poemSettings']['len']);
+  //$poemLine2 = substr($poemRotating, $roomData['poemSettings']['len'] ,$roomData['poemSettings']['len']);
+  //$poemLine3 = substr($poemRotating, $roomData['poemSettings']['len'] * 2 ,$roomData['poemSettings']['len']);
 
+  //echo "\n" . $poemLine1 . PHP_EOL . $poemLine2 . PHP_EOL . $poemLine3;
+  echo "\n" . $poemLine1;
+  if ($poemTimer === 0) {
     $newPoemPosition = ($roomData['poemSettings']['pos'] + 1) % $roomData['poemSettings']['len'];
-    return $newPoemPosition;
+  } else {
+    $newPoemPosition = $roomData['poemSettings']['pos'];
+  }
+  $poemTimer = ($poemTimer + 1) % 7;
+  return $newPoemPosition;
 }

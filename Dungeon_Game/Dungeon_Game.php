@@ -29,12 +29,14 @@ const PLAYER_SYMBOL = 'ඞ';
 $lastRoom = 1;
 $room = 1;
 $roomData = initRoom1();
+$poemTimer = 0;
 
 // Die Playermovement Logik
 $running = true;
 while ($running) {
   $input = fread(STDIN, 1);
   if ($input === 'q') break;
+
 
   $next = calcNextPosition($roomData['renderList']['player'], $input);
 
@@ -45,9 +47,10 @@ while ($running) {
     $roomData = ('initRoom' . $room)();
     $lastRoom++;
   }
+  drawDungeon($roomData);
 
-    $newPos = drawDungeon($roomData);
-    $roomData['poemSettings']['pos'] = $newPos;
+  $newPos = poemDraw($roomData, $poemTimer);
+  $roomData['poemSettings']['pos'] = $newPos;
 
-    usleep(33 * 1000);
+  usleep(33 * 1000);
 }
