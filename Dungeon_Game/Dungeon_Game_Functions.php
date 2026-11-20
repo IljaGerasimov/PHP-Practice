@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/Dungeon_Game_Const.php';
-
 function calcNextPosition(array $pos, string $input): array
 {
   $dx = 0;
@@ -48,60 +46,34 @@ function drawDungeon(array $roomData): void
   $height = $roomData['height'];
 
 
-  $cursorReset = "\e[H";
+  $cursorReset = "\e[2J" . "\e[H";
   $title = "    ===== PHPrison =====\n\n";
 
-  $map = array_fill(0, $height, array_fill(0, $width, false));;
+  $map = array_fill(0, $height, array_fill(0, $width, '.'));
+  $map[0] = array_fill(0, $width, '#');
+  $map[$height - 1] = array_fill(0, $width, '#');
+  for ($y = 1; $y < ($height - 1); $y++) {
+    $map[$y][0] = "#";
+    $map[$y][$width - 1] = "#";
+  }
 
-  print_r($map);
-  exit();
+  foreach ($roomData['renderList'] as $entities) {
+    $map[$entities['y']][$entities['x']] = $entities['symbol'];
+  }
 
+  //
+  $mapString = "";
   for ($y = 0; $y < $height; $y++) {
     for ($x = 0; $x < $width; $x++) {
-      if ($x === $player['x'] && $y === $player['y']) {
-        $cursorReset .= PLAYER_SYMBOL;
-      }
-      if ($x === $roomData['renderList']['target']['x'] && $y === $roomData['renderList']['target']['y']) {
-        $cursorReset .= ($roomData['rock']['x'] === $rock['x'] && $target['y'] === $rock['y']) ? HOLESYMBOL_FULL : HOLESYMBOL_EMPTY;
-      }
-      if ($x === $roomData['renderList']['rock']['x'] && $y === $roomData['renderList']['rock']['y']) {
-        $cursorReset .= ROCK_SYMBOL;
-      }
-      if ($x === $width - 1 && $y === intdiv($height, 2) && $doorOpen === true) {
-        $cursorReset .= " ";
-      }
-      if ($x === 0 || $x === $width - 1 || $y === 0 || $y === $height - 1) {
-        $cursorReset .= "#";
-      } else {
-        $cursorReset .= ".";
-      }
+      $mapString .= $map[$y][$x];
     }
-    $cursorReset .= "\n";
+    $mapString .= "\n";
   }
-  echo $cursorReset;
+
+  $poem = substr($roomData['poem'], $roomData['poemSettings']['pos']) . substr($roomData['poem'], 0, $roomData['poemSettings']['pos']);         // \r jumps back to line start and overwrites
+  $roomData['poemSettings']['pos'] = ($roomData['poemSettings']['pos'] + 1) % $roomData['poemSettings']['len'];
+
+
+  echo $cursorReset . $title . $mapString;
+  echo "\n" . $poem;
 }
-  
-//  for ($y = 0; $y < $height; $y++) {
-//     for ($x = 0; $x < $width; $x++) {
-//       if ($x === $player['x'] && $y === $player['y']) {
-//         $cursorReset .= PLAYER_SYMBOL;
-//       } 
-//       if ($x === $roomData['renderList']['target']['x'] && $y === $roomData['renderList']['target']['y']) {
-//         $cursorReset .= ($roomData['rock']['x'] === $rock['x'] && $target['y'] === $rock['y']) ? HOLESYMBOL_FULL : HOLESYMBOL_EMPTY;
-//       } 
-//       if ($x === $roomData['renderList']['rock']['x'] && $y === $roomData['renderList']['rock']['y']) {
-//         $cursorReset .= ROCK_SYMBOL;
-//       } 
-//       if ($x === $width - 1 && $y === intdiv($height, 2) && $doorOpen === true) {
-//         $cursorReset .= " ";
-//       } 
-//       if ($x === 0 || $x === $width - 1 || $y === 0 || $y === $height - 1) {
-//         $cursorReset .= "#";
-//       } else {
-//         $cursorReset .= ".";
-//       }
-//     }
-//     $cursorReset .= "\n";
-//   }
-//   echo $cursorReset;
-// }
