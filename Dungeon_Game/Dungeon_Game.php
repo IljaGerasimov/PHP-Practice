@@ -46,8 +46,8 @@ while ($running) {
     $lastRoom++;
   }
 
-  drawDungeon($roomData);
-  //echo "$input";
+    $newPos = drawDungeon($roomData);
+    $roomData['poemSettings']['pos'] = $newPos;
 
-  usleep(33000);
+    usleep(33 * 1000);
 }

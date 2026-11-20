@@ -19,7 +19,7 @@ function initRoom1(): array
     'height' => 9,
     'doorOpen' => false,
     'target_filled' => false,
-    'poem' => "𝑊𝑒 𝑏𝑢𝑖𝑙𝑑 𝑢𝑝𝑜𝑛 𝑡ℎ𝑒 𝑠𝑎𝑛𝑑𝑠 𝑜𝑓 𝑏𝑜𝑟𝑟𝑜𝑤𝑒𝑑 𝑡𝑖𝑚𝑒, \n𝑇ℎ𝑒 𝑟𝑎𝑑𝑖𝑎𝑛𝑡 𝑐𝑎𝑠𝑡𝑙𝑒𝑠 𝑜𝑓 𝑜𝑢𝑟 𝑓𝑙𝑒𝑒𝑡𝑖𝑛𝑔 𝑝𝑟𝑖𝑑𝑒. \n𝑇ℎ𝑜𝑢𝑔ℎ 𝑏𝑟𝑖𝑒𝑓 𝑜𝑢𝑟 𝑑𝑎𝑛𝑐𝑒 𝑏𝑒𝑛𝑒𝑎𝑡ℎ 𝑡ℎ𝑒 𝑠𝑡𝑎𝑟𝑟𝑦 𝑛𝑖𝑔ℎ𝑡, \n𝐺𝑟𝑖𝑒𝑣𝑒 𝑛𝑜𝑡 𝑤ℎ𝑎𝑡'𝑠 𝑠𝑤𝑒𝑝𝑡 𝑎𝑤𝑎𝑦 𝑏𝑦 𝑚𝑜𝑜𝑛𝑙𝑖𝑡 𝑡𝑖𝑑𝑒.",
+    'poem' => "We build upon the sands of borrowed time, The radiant castles of our fleeting pride. Though brief our dance beneath the starry night, Grieve not what’s swept away by moonlit tide.",
     'poemSettings' => ['pos' => 0, 'len' => $width],
     'renderList' => [
       'rock' => ['x' => 5, 'y' => 4, 'symbol' => '@'],

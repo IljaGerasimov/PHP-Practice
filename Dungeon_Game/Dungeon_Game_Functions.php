@@ -40,7 +40,7 @@ function gameOver(int $roomNumber): int
   }
 }
 
-function drawDungeon(array $roomData): void
+function drawDungeon(array $roomData): int
 {
   $width = $roomData['width'];
   $height = $roomData['height'];
@@ -70,10 +70,14 @@ function drawDungeon(array $roomData): void
     $mapString .= "\n";
   }
 
-  $poem = substr($roomData['poem'], $roomData['poemSettings']['pos']) . substr($roomData['poem'], 0, $roomData['poemSettings']['pos']);         // \r jumps back to line start and overwrites
-  $roomData['poemSettings']['pos'] = ($roomData['poemSettings']['pos'] + 1) % $roomData['poemSettings']['len'];
+    $poemRotating = substr($roomData['poem'], $roomData['poemSettings']['pos']) . substr($roomData['poem'], 0, $roomData['poemSettings']['pos']);         // \r jumps back to line start and overwrites
+    $poemLine1 = substr($poemRotating, 0 ,$roomData['poemSettings']['len']);
+    $poemLine2 = substr($poemRotating, $roomData['poemSettings']['len'] ,$roomData['poemSettings']['len']);
+    $poemLine3 = substr($poemRotating, $roomData['poemSettings']['len'] * 2 ,$roomData['poemSettings']['len']);
 
+    echo $cursorReset . $title . $mapString;
+    echo "\n" . $poemLine1 . PHP_EOL . $poemLine2 . PHP_EOL . $poemLine3;
 
-  echo $cursorReset . $title . $mapString;
-  echo "\n" . $poem;
+    $newPoemPosition = ($roomData['poemSettings']['pos'] + 1) % $roomData['poemSettings']['len'];
+    return $newPoemPosition;
 }
